@@ -19,6 +19,7 @@ module.exports = {
       "class-methods-use-this": 0,
       "comma-dangle": 0,
       "curly": ["error", "multi-line"],
+      "import/no-mutable-exports": 0,
       "import/no-unresolved": [2, {
         "commonjs": true
       }],

@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
-import uuid from 'uuidv4';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 import users from '../../dummyModels/users';
+import UserModel from '../../models/User';
+import hashPassword from '../utils/hash';
 
 dotenv.config();
 
+const User = new UserModel();
 /**
  * @export
  */
@@ -15,7 +17,7 @@ class UsersController {
    * @param  {Object} res - the response object
    * @return {JsonResponse} - the json response
    */
-  static userSignup(req, res) {
+  static async userSignup(req, res) {
     const {
       email,
       password,
@@ -24,18 +26,15 @@ class UsersController {
       address
     } = req.body;
 
-    const newUser = {
-      id: uuid(),
+    const newUser = await User.create({
       email,
-      password: bcrypt.hashSync(password, Number(process.env.SALT_ROUNDS)),
+      password: hashPassword(password),
       firstName,
       lastName,
       address,
       isAdmin: false,
       status: 'unverified'
-    };
-
-    users.push(newUser);
+    });
 
     delete newUser.password;
     return res.status(201).json({
@@ -52,7 +51,7 @@ class UsersController {
    */
   static async userSignin(req, res) {
     const { email, password } = req.body;
-    const user = users.find(item => item.email === email);
+    const user = await User.getByField('email', email);
 
     if (!user) {
       return res.status(401).json({

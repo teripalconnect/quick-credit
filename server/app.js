@@ -1,16 +1,9 @@
-import winston from 'winston';
 import express from 'express';
 import morganLogger from 'morgan';
 import bodyParser from 'body-parser';
 import routes from './api/routes';
+import logger from './services/logger';
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.Console(),
-  ]
-});
 
 const app = express();
 
