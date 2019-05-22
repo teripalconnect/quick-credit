@@ -1,0 +1,58 @@
+{
+  "name": "quick-credit",
+  "version": "1.0.0",
+  "description": "quick-credit",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development npm run migration && cross-env NODE_ENV=development nodemon server/app.js --exec babel-node",
+    "migration": "babel-node server/db/migration",
+    "build": "babel server --out-dir dist",
+    "start": "babel-node server/app.js",
+    "test": "cross-env NODE_ENV=test npm run migration && cross-env NODE_ENV=test nyc mocha --timeout 500000 --exit server/tests --require @babel/register --require babel-polyfill",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "heroku-postbuild": "npm run migration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rythae/quick-credit.git"
+  },
+  "author": "Rythae <auxano42@gmail.com> (github.com/Rythae)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rythae/quick-credit/issues"
+  },
+  "engines": {
+    "node": "8.11.4"
+  },
+  "homepage": "https://github.com/Rythae/quick-credit#readme",
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.19.0",
+    "cross-env": "5.2.0",
+    "dotenv": "8.0.0",
+    "express": "4.16.4",
+    "joi": "14.3.1",
+    "jsonwebtoken": "8.5.1",
+    "morgan": "1.9.1",
+    "pg": "7.11.0",
+    "uuidv4": "4.0.0",
+    "winston": "3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.4.4",
+    "@babel/core": "7.4.4",
+    "@babel/node": "7.2.2",
+    "@babel/preset-env": "7.4.4",
+    "@babel/register": "7.4.4",
+    "babel-polyfill": "6.26.0",
+    "chai": "4.2.0",
+    "coveralls": "3.0.3",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-plugin-import": "2.17.2",
+    "mocha": "6.1.4",
+    "nodemon": "1.19.0",
+    "nyc": "14.1.0",
+    "supertest": "4.0.2"
+  }
+}

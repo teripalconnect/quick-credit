@@ -1,0 +1,17 @@
+sudo: required
+language: node_js
+node_js:
+  - "8.11.4"
+env:
+  global:
+    - JWT_SECRET=ILoveQuickCredit,ILoveNigeria
+    - CC_TEST_REPORTER_ID=069ff68e9d23f5bc51c832963981af14a52630b95145ea97c35dba26607e457e
+before_script:
+  - npm install
+  
+script:
+  - nyc --reporter=lcov npm run test
+
+after_success:
+  - npm run coveralls
+
